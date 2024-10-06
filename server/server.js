@@ -6,11 +6,12 @@ const cors = require('cors');
 const app = express();
 
 //handle cors
-app.use(cors({
-    origin: 'http://localhost:5173/',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-    credentials: true,
-}));
+const corsOptions = {
+    origin: 'http://localhost:5173',
+    optionsSuccessStatus: 200
+  };
+  
+app.use(cors(corsOptions));
 
 //server port
 const PORT = process.env.PORT || 5050;
