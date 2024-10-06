@@ -5,9 +5,11 @@ const urlRoutes = require('./routes/urlRoutes');
 const cors = require('cors');
 const app = express();
 
+const origin = process.env.ORIGIN;
+
 //handle cors
 const corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: origin,
     optionsSuccessStatus: 200
   };
   
