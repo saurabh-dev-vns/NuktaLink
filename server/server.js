@@ -24,6 +24,11 @@ app.use(express.json());
 //connect to database
 connectDB();
 
+//send hello world
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+  })
+
 // Use the URL routes
 app.use('/', urlRoutes);
 
