@@ -7,16 +7,18 @@ const app = express();
 
 const allowedOrigins =
   process.env.NODE_ENV === "production"
-    ? ["https://nukta-link.vercel.app/"]
+    ? ["https://nukta-link.vercel.app"]
     : ["http://localhost:5173"];
 
 //handle cors
 const corsOptions = {
     origin: allowedOrigins,
-    credentials: true, // access-control-allow-credentials:true
-    methods: "GET,PUT,POST,DELETE",
-    optionSuccessStatus: 200,
+    credentials: true, // Required for cookies, authorization headers
+    methods: "GET,PUT,POST,DELETE,OPTIONS", // Include OPTIONS
+    allowedHeaders: "Content-Type,Authorization", // Ensure headers are correct
+    optionSuccessStatus: 200
   };
+  
   
 app.use(cors(corsOptions));
 
