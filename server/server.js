@@ -5,12 +5,17 @@ const urlRoutes = require('./routes/urlRoutes');
 const cors = require('cors');
 const app = express();
 
-const origin = process.env.ORIGIN;
+const allowedOrigins =
+  process.env.NODE_ENV === "production"
+    ? ["https://nukta-link.vercel.app/"]
+    : ["http://localhost:5173"];
 
 //handle cors
 const corsOptions = {
-    origin: origin,
-    optionsSuccessStatus: 200
+    origin: allowedOrigins,
+    credentials: true, // access-control-allow-credentials:true
+    methods: "GET,PUT,POST,DELETE",
+    optionSuccessStatus: 200,
   };
   
 app.use(cors(corsOptions));
