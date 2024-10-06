@@ -4,7 +4,7 @@
   "description": "This is a very simple backend that handles link shortening.",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "author": "Saurabh Sahani",
   "license": "ISC",
