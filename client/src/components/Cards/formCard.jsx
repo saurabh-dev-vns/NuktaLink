@@ -7,7 +7,7 @@ const FormCard = () => {
   const handleUrlSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
     try {
-      const response = await axios.post('http://localhost:5000/shorten', {
+      const response = await axios.post('https://nukta-link.vercel.app/shorten', {
         originalUrl: OriginalURL
       });
       console.log(response.data);
