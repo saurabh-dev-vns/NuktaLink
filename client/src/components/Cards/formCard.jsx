@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from 'axios';
 
 const FormCard = () => {
   const [OriginalURL, setOriginalURL] = useState('');
@@ -7,10 +6,20 @@ const FormCard = () => {
   const handleUrlSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/shorten`, {
-        originalUrl: OriginalURL
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/shorten`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ originalUrl: OriginalURL })
       });
-      console.log(response.data);
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log(data);
     } catch (error) {
       console.log({ "msg": "Unable to submit form", error });
     }
