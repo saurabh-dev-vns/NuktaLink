@@ -7,7 +7,7 @@ const app = express();
 
 const allowedOrigins =
   process.env.NODE_ENV === "production"
-    ? ["http://localhost:5173"]
+    ? ["https://nukta-link.vercel.app"]
     : ["http://localhost:5173"];
 
 //handle cors
