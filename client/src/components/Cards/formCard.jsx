@@ -7,7 +7,7 @@ const FormCard = () => {
   const handleUrlSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/shorten`, {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/shorten`, {
         originalUrl: OriginalURL
       });
       console.log(response.data);
