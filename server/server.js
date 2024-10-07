@@ -1,3 +1,5 @@
+//server.js
+
 require('dotenv').config();
 const express = require("express");
 const connectDB = require("./config/db_config");
@@ -5,41 +7,35 @@ const urlRoutes = require('./routes/urlRoutes');
 const cors = require('cors');
 const app = express();
 
-const allowedOrigins =
-  process.env.NODE_ENV === "production"
+const allowedOrigins = 
+  process.env.NODE_ENV === "production" 
     ? ["https://nukta-link.vercel.app"]
     : ["http://localhost:5173"];
 
-//handle cors
 const corsOptions = {
-    origin: allowedOrigins,
-    credentials: true, // Required for cookies, authorization headers
-    methods: "GET,PUT,POST,DELETE,OPTIONS", // Include OPTIONS
-    allowedHeaders: "Content-Type,Authorization", // Ensure headers are correct
-    optionSuccessStatus: 200
-  };
-  
-  
+    origin: "*",
+    credentials: true,
+    methods: "GET,PUT,POST,DELETE,OPTIONS",
+    allowedHeaders: "Origin,X-Requested-With,Content-Type,Accept,Authorization",
+    optionsSuccessStatus: 200
+};
+
 app.use(cors(corsOptions));
-
-//server port
-const PORT = process.env.PORT || 5050;
-
-// Middleware to parse JSON
 app.use(express.json());
-
-//connect to database
 connectDB();
 
-//send hello world
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-  })
+app.use((req, res, next) => {
+  console.log('CORS Middleware - Origin:', req.headers.origin);
+  next();
+});
 
-// Use the URL routes
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
 app.use('/api', urlRoutes);
 
-// Start the server
-app.listen(PORT, (req,res) => {
-    console.log(`Server is running on port : ${PORT}`);
-})
+const PORT = process.env.PORT || 5050;
+app.listen(PORT, () => {
+    console.log(`Server is running on port: ${PORT}`);
+});
