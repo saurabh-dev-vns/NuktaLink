@@ -10,29 +10,20 @@ const allowedOrigins = process.env.NODE_ENV === "production"
   ? ["https://nukta-link.vercel.app"]
   : ["http://localhost:5173"];
 
+// CORS options
 const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (e.g., mobile apps or curl requests)
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: allowedOrigins,
   optionsSuccessStatus: 200, // For legacy browser support
 };
 
 // Use CORS middleware
 app.use(cors(corsOptions));
 
-// Allow pre-flight requests (OPTIONS)
-app.options('*', cors(corsOptions)); // Pre-flight handling
-
 // Parse incoming requests with JSON payloads
 app.use(express.json());
 
-// Connect to database
-connectDB();
+// Connect to the database
+connectDB()
 
 // Log origin for CORS debugging
 app.use((req, res, next) => {
@@ -43,9 +34,15 @@ app.use((req, res, next) => {
 // Define API routes
 app.use('/api', urlRoutes);
 
-// Basic route
+// Basic route for testing
 app.get('/', (req, res) => {
   res.send('Hello World!');
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something went wrong!' });
 });
 
 // Start the server
