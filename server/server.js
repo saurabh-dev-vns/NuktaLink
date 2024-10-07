@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
   })
 
 // Use the URL routes
-app.use('/', urlRoutes);
+app.use('/api', urlRoutes);
 
 // Start the server
 app.listen(PORT, (req,res) => {
