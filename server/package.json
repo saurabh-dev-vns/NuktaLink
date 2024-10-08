@@ -2,9 +2,9 @@
   "name": "nukta-link-server",
   "version": "1.0.0",
   "description": "This is a very simple backend that handles link shortening.",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "author": "Saurabh Sahani",
   "license": "ISC",
