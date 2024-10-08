@@ -6,14 +6,23 @@ const cors = require('cors');
 const app = express();
 
 // Set allowed origins based on environment
-const allowedOrigins = process.env.NODE_ENV === "production" 
+const allowedOrigins = process.env.NODE_ENV === "production"
   ? ["https://nukta-link.vercel.app"]
   : ["http://localhost:5173"];
 
 // CORS options
 const corsOptions = {
-  origin: allowedOrigins,
-  optionsSuccessStatus: 200, // For legacy browser support
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: "GET,PUT,POST,DELETE,OPTIONS",
+  allowedHeaders: "Origin,X-Requested-With,Content-Type,Accept,Authorization",
+  optionsSuccessStatus: 200 // For legacy browser support
 };
 
 // Use CORS middleware
@@ -27,7 +36,7 @@ connectDB()
 
 // Log origin for CORS debugging
 app.use((req, res, next) => {
-  console.log('CORS Middleware - Origin:', req.headers.origin);
+  console.log('CORS Middleware - Origin:', req.headers.origin); // Log incoming origin
   next();
 });
 
