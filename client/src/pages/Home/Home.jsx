@@ -1,5 +1,5 @@
 import React from "react";
-import FormCard from "../../components/Cards/formCard";
+import FormCard from "../../components/Cards/FormCard";
 
 const Home = () => {
   return (

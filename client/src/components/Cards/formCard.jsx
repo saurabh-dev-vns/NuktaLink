@@ -1,29 +1,24 @@
 import React, { useState } from "react";
+import BASE_URL from "../../utils/BaseURl"; // Correct the file path if necessary
+import axios from "axios";
 
 const FormCard = () => {
-  const [OriginalURL, setOriginalURL] = useState('');
+  const [originalURL, setOriginalURL] = useState('');
 
   const handleUrlSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault(); 
+
+    const formData = {
+      originalUrl: originalURL 
+    };
+
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/shorten`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ originalUrl: OriginalURL })
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const data = await response.json();
-      console.log(data);
+      const response = await axios.post(`${BASE_URL}/api/shorten`, formData);
+      setOriginalURL("");
     } catch (error) {
-      console.log({ "msg": "Unable to submit form", error });
+      console.error({ "msg": "Unable to submit form", error });
     }
-  }
+  };
 
   return (
     <>
@@ -42,11 +37,11 @@ const FormCard = () => {
               type="url"
               name="url"
               id="url"
-              value={OriginalURL}
+              value={originalURL} // Use camelCase for state variable
               onChange={(e) => setOriginalURL(e.target.value)}
               className="bg-gray-50 border border-gray-300 
-            text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
-            dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+              text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 
+              dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               placeholder="https://nuktalink.com"
               required
             />

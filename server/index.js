@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 
 // CORS options
 const corsOptions = {
-  origin: "*",
+  origin: "https://nuktalink.vercel.app",
   credentials: true
 };
 
