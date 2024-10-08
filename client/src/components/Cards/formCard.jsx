@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import BASE_URL from "../../utils/BaseURl"; // Correct the file path if necessary
 import axios from "axios";
+import SuccessToast from "../Toast-msg/SuccessTost";
+
 
 const FormCard = () => {
   const [originalURL, setOriginalURL] = useState('');
@@ -15,8 +17,10 @@ const FormCard = () => {
     try {
       const response = await axios.post(`${BASE_URL}/api/shorten`, formData);
       setOriginalURL("");
+      SuccessToast();
     } catch (error) {
       console.error({ "msg": "Unable to submit form", error });
+      // toast.error("Unable to generate link.")
     }
   };
 
