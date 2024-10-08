@@ -1,35 +1,33 @@
 require('dotenv').config();
 const express = require("express");
+const bodyParser = require("body-parser");
 const connectDB = require("./config/db_config");
 const urlRoutes = require('./routes/urlRoutes');
-const cors = require('cors');
-const app = express();
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
-// Set allowed origins based on environment
-const allowedOrigins = process.env.NODE_ENV === "production"
-  ? ["https://nukta-link.vercel.app"]
-  : ["http://localhost:5173"];
+
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
 
 // CORS options
 const corsOptions = {
-  origin: allowedOrigins,
+  origin: "*",
   credentials: true
 };
 
 // Use CORS middleware
 app.use(cors(corsOptions));
 
-// Parse incoming requests with JSON payloads
+
+app.use(cookieParser());
 app.use(express.json());
 
 // Connect to the database
 connectDB()
-
-// Log origin for CORS debugging
-app.use((req, res, next) => {
-  console.log('CORS Middleware - Origin:', req.headers.origin); // Log incoming origin
-  next();
-});
 
 // Define API routes
 app.use('/api', urlRoutes);
