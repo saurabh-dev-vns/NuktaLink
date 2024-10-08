@@ -27,4 +27,13 @@ const createShortUrl = async (req, res) => {
   }
 };
 
-module.exports = { createShortUrl };
+const getShortUrl = async (req,res)=>{
+ try {
+  const shortURL = await URL.find();
+  res.json(shortURL);
+ } catch (error) {
+  res.status(400).json({"msg":"Unable to find urls",error});
+ }
+}
+
+module.exports = { createShortUrl,getShortUrl};

@@ -12,17 +12,8 @@ const allowedOrigins = process.env.NODE_ENV === "production"
 
 // CORS options
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  methods: "GET,PUT,POST,DELETE,OPTIONS",
-  allowedHeaders: "Origin,X-Requested-With,Content-Type,Accept,Authorization",
-  optionsSuccessStatus: 200 // For legacy browser support
+  origin: allowedOrigins,
+  credentials: true
 };
 
 // Use CORS middleware
