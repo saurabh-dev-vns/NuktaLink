@@ -1,2 +1,2 @@
-const baseURL = "https://nuktalink-api.vercel.app";
+const baseURL = "https://nukta-link-api.vercel.app";
 export default baseURL;
